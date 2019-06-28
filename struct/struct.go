@@ -14,11 +14,9 @@ type User struct {
 	ExpectedAge int
 }
 
-func main() {
-	var firtName, lastName, birthdate string
+var firtName, lastName, birthdate string
 
-	currentDate := time.Now()
-
+func info()  {
 	fmt.Println("\n")
 	fmt.Println("Create a new user: \n")
 
@@ -26,8 +24,12 @@ func main() {
 	fmt.Scanf("%v \n", &firtName)
 	fmt.Println("Last Name:")
 	fmt.Scanf("%v \n", &lastName)
-	fmt.Println("Birthdate: (dd/mm/yyyy)")
+	fmt.Println("Birthdate: (dd-mm-yyyy)")
 	fmt.Scanf("%v \n", &birthdate)
+}
+
+func process() *User {
+	currentDate := time.Now()
 
 	layout := "02-01-2006"
 	str := birthdate
@@ -36,7 +38,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	// fmt.Println(t)
 
 	age := age.AgeAt(t, currentDate)
 
@@ -47,11 +48,21 @@ func main() {
 		ExpectedAge: age,
 	}
 
-	date := u.Birthdate
-	
+	return u
+}
+
+func print(u *User)  {
+
 	fmt.Println("\nName: ", u.FirstName, u.LastName)
-	fmt.Println("Birthdate: ", date.Format("Jan 02"))
+	fmt.Println("Birthdate: ", u.Birthdate.Format("Jan 02"))
 	fmt.Println("Age: ", u.ExpectedAge)
 	fmt.Println("\n")
+}
 
+func main() {
+	
+	info()
+	u := process()
+	print(u)
+	
 }
